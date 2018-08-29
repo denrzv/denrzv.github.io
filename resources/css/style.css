@@ -413,12 +413,14 @@ footer a:hover {
 
 @media only screen and (max-width: 768px) {
 
+
   /* bannder section*/
 
   h1 {
     font-size: 2.5rem;
     font-weight: 700;
     line-height: 3rem;
+    margin-top: 1rem;
   }
 
   .banner-text a {
@@ -428,6 +430,9 @@ footer a:hover {
 
   /* information section */
 
+  .information-quote h2 {
+    line-height: 2rem;
+  }
 
   .information-block {
     flex-wrap: wrap;
