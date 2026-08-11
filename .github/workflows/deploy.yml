@@ -1,0 +1,71 @@
+name: Publish Bloom Flowers
+
+# Serves denrzv/bloom-flowers at this origin ROOT.
+#
+# Why this repository exists as a deployment target rather than as a copy of the site: SiteSkin
+# discovery requests `/.well-known/siteskin.json` at the origin root, and the reference manifest's
+# paths (`/catalog`, `/cart`, `/account`, `/assets/siteskin/logo.png`) are origin-absolute. A
+# GitHub Pages *project* site is served from a subpath, where that well-known path belongs to
+# whoever owns the user-site root and every manifest path resolves outside the deployment. A user
+# site owns its root, so the integration is reachable here and nowhere else on github.io.
+#
+# This is a verification stopgap, not the permanent home. bloomflowers.webora.app is, and it needs
+# a DNS record that does not exist yet. DEMO-002 needs four distinct origins, which one Pages root
+# cannot provide.
+#
+# Nothing is copied. The site is checked out from denrzv/bloom-flowers at deploy time, so the
+# manifest keeps a single source of truth and the SHA-256 pinned in both repositories stays the
+# only thing that has to agree.
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+  schedule:
+    # Resync weekly, so a change merged in denrzv/bloom-flowers reaches this origin without a
+    # cross-repository token. Use workflow_dispatch when you want it immediately.
+    - cron: "0 6 * * 1"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the reference integration
+        uses: actions/checkout@v4
+        with:
+          repository: denrzv/bloom-flowers
+          ref: main
+          path: site
+
+      # bloom-flowers pins bloomflowers.webora.app for its own deployment. Publishing that file
+      # here would make Pages treat this site as the custom domain too and 301 every request to a
+      # host with no DNS record -- which is exactly how the project deployment became unreachable.
+      - name: Drop the custom-domain pin
+        run: rm -f site/CNAME
+
+      - name: Every path the manifest names is served
+        working-directory: site
+        run: python3 tools/check-routes.py
+
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
