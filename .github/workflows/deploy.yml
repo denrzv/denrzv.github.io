@@ -9,22 +9,22 @@ name: Publish Bloom Flowers
 # whoever owns the user-site root and every manifest path resolves outside the deployment. A user
 # site owns its root, so the integration is reachable here and nowhere else on github.io.
 #
-# This is a verification stopgap, not the permanent home. bloomflowers.webora.app is, and it needs
-# a DNS record that does not exist yet. DEMO-002 needs four distinct origins, which one Pages root
-# cannot provide.
+# This is a verification stopgap, not the permanent home. A dedicated Bloom/Webora domain is the
+# intended destination once DNS is intentionally configured.
 #
-# Nothing is copied. The site is checked out from denrzv/bloom-flowers at deploy time, so the
-# manifest keeps a single source of truth and the SHA-256 pinned in both repositories stays the
-# only thing that has to agree.
+# Nothing is copied into this repository. The workflow checks out denrzv/bloom-flowers at deploy
+# time, so Bloom remains the single source of truth. The published artifact also records the exact
+# Bloom commit in /deployment.json so source/live drift is observable rather than inferred from UI.
 
 on:
   push:
     branches: [master]
   workflow_dispatch:
   schedule:
-    # Resync weekly, so a change merged in denrzv/bloom-flowers reaches this origin without a
-    # cross-repository token. Use workflow_dispatch when you want it immediately.
-    - cron: "0 6 * * 1"
+    # Cross-repository pushes cannot trigger this workflow without an additional token/app. Keep
+    # the demo bounded to at most a few hours stale, and use workflow_dispatch immediately after a
+    # visual/demo merge when freshness matters.
+    - cron: "17 */6 * * *"
 
 permissions:
   contents: read
@@ -49,13 +49,18 @@ jobs:
           ref: main
           path: site
 
-      # bloom-flowers pins bloomflowers.webora.app for its own deployment. Publishing that file
-      # here would make Pages treat this site as the custom domain too and 301 every request to a
-      # host with no DNS record -- which is exactly how the project deployment became unreachable.
-      - name: Drop the custom-domain pin
-        run: rm -f site/CNAME
+      - name: Record Bloom source revision
+        id: source
+        shell: bash
+        run: |
+          set -euo pipefail
+          bloom_sha="$(git -C site rev-parse HEAD)"
+          generated_at="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          printf '{\n  "sourceRepository": "denrzv/bloom-flowers",\n  "sourceRef": "main",\n  "sourceSha": "%s",\n  "generatedAt": "%s"\n}\n' \
+            "$bloom_sha" "$generated_at" > site/deployment.json
+          echo "bloom_sha=$bloom_sha" >> "$GITHUB_OUTPUT"
 
-      - name: Every path the manifest names is served
+      - name: Every linked local route and asset is served
         working-directory: site
         run: python3 tools/check-routes.py
 
@@ -69,3 +74,15 @@ jobs:
 
       - id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Publish deployment summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "### Bloom Flowers deployment"
+            echo
+            echo "- Bloom source: \`${{ steps.source.outputs.bloom_sha }}\`"
+            echo "- Live origin: https://denrzv.github.io/"
+            echo "- Source metadata: https://denrzv.github.io/deployment.json"
+          } >> "$GITHUB_STEP_SUMMARY"
