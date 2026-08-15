@@ -20,6 +20,10 @@ Nothing is copied. [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml
 and its SHA-256 — pinned in both `denrzv/bloom-flowers` and `denrzv/webora` — remains the only thing
 that has to agree.
 
+GitHub Pages for this repository is intentionally configured to publish via **GitHub Actions**, not
+from the `master` branch contents. The branch only contains deployment documentation and workflow
+configuration; the live site comes from the Pages artifact assembled from `denrzv/bloom-flowers`.
+
 This is a **verification stopgap**. The permanent home is `bloomflowers.webora.app`, pending a DNS
 record, and the wider demo fleet needs four distinct origins that a single Pages root cannot supply.
 
