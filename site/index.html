@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>The Bogosort Appreciation Society</title>
+<meta name="description" content="Official homepage of the Bogosort Appreciation Society. Est. O(n!) years ago.">
+<style>
+  body {
+    background: #fff;
+    color: #000;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 18px;
+    line-height: 1.45;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  a { color: #00e; }
+  a:visited { color: #551a8b; }
+  mark { background: #ff0; color: #000; padding: 0 2px; }
+  h1 { font-size: 2.1em; margin: 0.4em 0 0.1em; text-align: center; }
+  h2 { margin-top: 1.6em; }
+  .center { text-align: center; }
+  .small { font-size: 0.8em; }
+  hr { border: 0; border-top: 2px groove #999; margin: 1.5em 0; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { border: 1px solid #000; padding: 4px 8px; text-align: left; vertical-align: top; }
+  th { background: #eee; }
+  code, .mono { font-family: "Courier New", Courier, monospace; }
+  .deck { font-family: "Courier New", Courier, monospace; font-size: 1.6em; letter-spacing: 0.25em; margin: 0.4em 0; word-break: break-all; }
+  button { font: inherit; font-size: 0.9em; padding: 2px 10px; cursor: pointer; }
+  .counter { display: inline-block; background: #000; color: #0f0; font-family: "Courier New", Courier, monospace; padding: 2px 8px; letter-spacing: 0.15em; }
+  .guestbook p { margin: 0.4em 0 1em; }
+  .blink { animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { visibility: hidden; } }
+  @media (prefers-reduced-motion: reduce) { .blink { animation: none; } }
+</style>
+</head>
+<body>
+
+<p class="center small">[ <a href="#about">About</a> | <a href="#demo">Live Demo</a> | <a href="#hall">Hall of Fame</a> | <a href="#faq">FAQ</a> | <a href="#guestbook">Guestbook</a> ]</p>
+
+<h1>The Bogosort Appreciation Society</h1>
+<p class="center"><i>Shuffling since forever. Sorted since&hellip; <mark>any minute now</mark>.</i></p>
+<p class="center small"><span class="blink">&#9733; NEW! &#9733;</span> Our members' page is <mark>under construction</mark> (estimated completion: O(n!)).</p>
+
+<hr>
+
+<h2 id="about">Welcome, fellow optimist!</h2>
+<p>
+  Tired of algorithms that <i>work</i>? Bored of <code>O(n log n)</code>? You have come to the right place.
+  This homepage is dedicated to <b>Bogosort</b>, the sorting algorithm with the most faith in the universe:
+</p>
+<ol>
+  <li>Look at the list.</li>
+  <li>Is it sorted? <mark>Great, you're done!</mark></li>
+  <li>If not, throw it in the air, pick it all up again, and go to step 1.</li>
+</ol>
+<p>
+  Best case: <mark>O(n)</mark>. Average case: O(n &middot; n!). Worst case: the heat death of the universe, but
+  at least you'll know exactly where you were.
+</p>
+
+<hr>
+
+<h2 id="demo">Live Demo (no refunds)</h2>
+<p>Here are five cards. Press the button and let fate do the rest.</p>
+<p class="deck" id="deck" aria-live="polite"></p>
+<p>
+  <button type="button" id="shuffle">Shuffle and pray</button>
+  <button type="button" id="auto">Pray harder (auto)</button>
+  <button type="button" id="reset">New hand</button>
+</p>
+<p id="status">Shuffles so far: <b id="tries">0</b>. <span id="verdict"></span></p>
+<p class="small">Statistically, 5 cards take about 120 shuffles. Statistically, you are also about to say "one more".</p>
+
+<hr>
+
+<h2 id="hall">Hall of Fame</h2>
+<p>Bogosort is not alone. These distinguished colleagues are honorary members:</p>
+<table>
+  <tr><th>Algorithm</th><th>How it works</th><th>Complexity</th></tr>
+  <tr><td>Stalin Sort</td><td>Walk the list and quietly remove any element that is out of order. The list is now sorted. Nobody asks about the others.</td><td><mark>O(n)</mark>, impressive</td></tr>
+  <tr><td>Sleep Sort</td><td>For every number <i>x</i>, start a thread that sleeps <i>x</i> seconds, then prints <i>x</i>. Please do not sort phone numbers.</td><td>O(max(x))</td></tr>
+  <tr><td>Miracle Sort</td><td>Check whether the list is sorted. If not, wait a bit and check again. Cosmic rays will flip the right bits eventually.</td><td>O(&#128591;)</td></tr>
+  <tr><td>Intelligent Design Sort</td><td>The list is already in the order its creator intended. Who are you to question it?</td><td><mark>O(1)</mark></td></tr>
+  <tr><td>Quantum Bogosort</td><td>Shuffle the list once. If it is not sorted, destroy the universe. In the surviving universe, it is sorted.</td><td>O(n), terms and conditions apply</td></tr>
+  <tr><td>Bogobogosort</td><td>Bogosort the first two elements, then the first three, and so on, re-checking everything with more bogosorts. Strictly for the brave.</td><td>Yes</td></tr>
+</table>
+
+<hr>
+
+<h2 id="faq">Frequently Asked Questions</h2>
+<p><b>Q: Is bogosort used in production?</b><br>
+A: We cannot comment on ongoing incidents.</p>
+<p><b>Q: How do I join?</b><br>
+A: Shuffle a deck of cards until it is in order, then email us a photo. Membership is <mark>free</mark> but extremely exclusive.</p>
+<p><b>Q: What is your favourite data structure?</b><br>
+A: The pile.</p>
+<p><b>Q: My interviewer asked me to sort an array and I said "bogosort". Did I get the job?</b><br>
+A: In some universe, yes. Keep shuffling.</p>
+<p><b>Q: Can I binary search my way out of this page?</b><br>
+A: Only if the page is sorted. It is not.</p>
+
+<hr>
+
+<h2 id="guestbook">Guestbook</h2>
+<div class="guestbook">
+  <p><b>quicksort_enjoyer</b> wrote:<br>&ldquo;I picked a bad pivot once and ended up here. Nice place. Very cozy.&rdquo;</p>
+  <p><b>off_by_one</b> wrote:<br>&ldquo;Great site!!! I visited 11 times out of 10.&rdquo;</p>
+  <p><b>recursion_fan</b> wrote:<br>&ldquo;To understand this guestbook, read this guestbook.&rdquo;</p>
+  <p><b>big_O_no</b> wrote:<br>&ldquo;Ran the demo on 52 cards. I'll let you know how it goes. <mark>Please feed my cat.</mark>&rdquo;</p>
+  <p><b>linked_lisa</b> wrote:<br>&ldquo;I'd tell you a joke about pointers, but you'd have to follow me.&rdquo;</p>
+</div>
+<p class="small"><i>Sign our guestbook! (The guestbook is a write-only memory.)</i></p>
+
+<hr>
+
+<p class="center">
+  You are visitor number <span class="counter" id="counter">000000</span>
+  <br><span class="small">(counted by bogosort, so give or take)</span>
+</p>
+<p class="center small">
+  Best viewed in any browser at 800&times;600, preferably while waiting for something to compile.<br>
+  &copy; 1999&ndash;&infin; The Bogosort Appreciation Society. All rights shuffled.<br>
+  &larr; Previous site | <a href="#about">Random site</a> | Next site &rarr; <i>(Algorithm Webring)</i>
+</p>
+
+<script>
+(function () {
+  "use strict";
+
+  var CARDS = ["A", "2", "3", "4", "5"];
+  var AUTO_DELAY_MS = 40;
+  var COUNTER_DIGITS = 6;
+  var LABEL_AUTO_START = "Pray harder (auto)";
+  var LABEL_AUTO_STOP = "Stop praying";
+  var VERDICT_SORTED = "SORTED! A miracle! Tell your friends!";
+
+  var deckEl = document.getElementById("deck");
+  var triesEl = document.getElementById("tries");
+  var verdictEl = document.getElementById("verdict");
+  var autoBtn = document.getElementById("auto");
+
+  var hand = [];
+  var tries = 0;
+  var timer = null;
+
+  function shuffle(list) {
+    for (var i = list.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = list[i];
+      list[i] = list[j];
+      list[j] = tmp;
+    }
+  }
+
+  function isSorted(list) {
+    for (var i = 1; i < list.length; i++) {
+      if (CARDS.indexOf(list[i - 1]) > CARDS.indexOf(list[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function stopAuto() {
+    clearInterval(timer);
+    timer = null;
+    autoBtn.textContent = LABEL_AUTO_START;
+  }
+
+  function render() {
+    var sorted = isSorted(hand);
+    deckEl.innerHTML = sorted ? "<mark>" + hand.join(" ") + "</mark>" : hand.join(" ");
+    triesEl.textContent = String(tries);
+    verdictEl.innerHTML = sorted ? "<mark>" + VERDICT_SORTED + "</mark>" : "";
+    if (sorted) {
+      stopAuto();
+    }
+  }
+
+  function step() {
+    if (isSorted(hand)) {
+      return;
+    }
+    shuffle(hand);
+    tries++;
+    render();
+  }
+
+  function newHand() {
+    stopAuto();
+    hand = CARDS.slice();
+    do {
+      shuffle(hand);
+    } while (isSorted(hand));
+    tries = 0;
+    render();
+  }
+
+  document.getElementById("shuffle").addEventListener("click", step);
+  document.getElementById("reset").addEventListener("click", newHand);
+  autoBtn.addEventListener("click", function () {
+    if (timer) {
+      stopAuto();
+      return;
+    }
+    if (isSorted(hand)) {
+      newHand();
+    }
+    autoBtn.textContent = LABEL_AUTO_STOP;
+    timer = setInterval(step, AUTO_DELAY_MS);
+  });
+
+  var visitor = String(Math.floor(Math.random() * Math.pow(10, COUNTER_DIGITS)));
+  document.getElementById("counter").textContent = visitor.padStart(COUNTER_DIGITS, "0");
+
+  newHand();
+})();
+</script>
+</body>
+</html>
